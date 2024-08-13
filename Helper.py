@@ -2,7 +2,7 @@ import os
 import openai # Juan
 
 class OpenAIChatbot: # Cindy
-    def __init__(self):
+    def __init__(self): #Liz
         # Initialize the API key #Matthew
         openai.api_key = os.getenv("OPENAI_API_KEY")
         if not openai.api_key:
