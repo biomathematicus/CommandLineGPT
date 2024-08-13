@@ -1,5 +1,5 @@
 import os
-import openai
+import openai # Juan
 
 class OpenAIChatbot: # Cindy
     def __init__(self):
