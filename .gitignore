@@ -4,3 +4,5 @@
 .vs/*
 # Ignore a mac desktop file
 .DS_Store
+# Ignore virtual environemnt
+.venv/*
