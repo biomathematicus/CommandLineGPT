@@ -13,6 +13,15 @@ git push
 ```
 Follow this protocol to make changes to the repository. 
 
+If you need to log into git, use: 
+```bash
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+```
+If you need to cancel a git add operation, use: 
+```bash
+git reset --hard HEAD
+``` 
 ### Prerequisites
 - An OpenAI API key. Load the key in an environmental variable called OPENAI_API_KEY. 
 
