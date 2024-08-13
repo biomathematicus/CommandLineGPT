@@ -1,5 +1,5 @@
 import os
-import openai # Juan
+import openai # Juan B. 
 
 class OpenAIChatbot:
     def __init__(self):
