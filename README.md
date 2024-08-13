@@ -4,9 +4,9 @@
 This project intends to provide a minimalist gateway for developers interested in a commadn-line solution to access OpenAI. The example provided is in Python. If you want another language, simply run the translation through any of the AI agents available. 
 
 **Git protocol:**
+After you make yoru changes: 
 ```bash
 git pull
-# [make your changes]
 git add .
 git commit -m "[description of the change]"
 git push
