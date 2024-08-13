@@ -3,7 +3,7 @@ import openai # Juan
 
 class OpenAIChatbot:
     def __init__(self):
-        # Initialize the API key
+        # Initialize the API key #Matthew
         openai.api_key = os.getenv("OPENAI_API_KEY")
         if not openai.api_key:
             print("API key is not set. Please set the OPENAI_API_KEY environment variable.")
