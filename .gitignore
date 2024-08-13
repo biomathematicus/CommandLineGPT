@@ -1,0 +1,6 @@
+# Ignore the local configuration for Visual Studio Code
+.vscode/*
+# Ignore the local configuration for Visual Studio
+.vs/*
+# Ignore a mac desktop file
+.DS_Store
