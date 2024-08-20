@@ -21,6 +21,10 @@ If you need to log into git, use:
 ```
 If you need to cancel a git add operation, use: 
 ```bash
+git reset 
+``` 
+If you need to force a retrieval of files on the server and ovewrite local changes, use: 
+```bash
 git reset --hard HEAD
 ``` 
 ### Prerequisites
