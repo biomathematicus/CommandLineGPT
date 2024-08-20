@@ -6,3 +6,5 @@
 .DS_Store
 # Ignore virtual environemnt
 .venv/*
+# Ignore the ocnfiguration file. It is dowloaded but not updated
+config.json
