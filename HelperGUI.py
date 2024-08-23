@@ -1,3 +1,5 @@
+#Must install first  pip install tkinterdnd2 PyMuPDF
+ 
 import os
 import openai
 import tkinter as tk
@@ -19,11 +21,10 @@ client = openai.OpenAI()
 my_assistant = client.beta.assistants.create(
     model="gpt-4o",
     instructions="""
-    Please address the user as Rockin Blonde.
-    Information about me: I teach many math courses from baby math to Calculus. I play guitar and have played for years in an alternative rock band. I love learning new things!
-    ...
+    Please address the user as Human.
+        ...
     """,
-    name="Vincent Vega, hitman",
+    name="Sancho, squire",
     tools=[{"type": "code_interpreter"}],
 )
 
@@ -83,7 +84,7 @@ def process_response():
 
 def update_gui(response):
     chat_area.config(state=tk.NORMAL)
-    chat_area.insert(tk.END, f"Rockin Blonde: {response}\n")
+    chat_area.insert(tk.END, f"Human: {response}\n")
     chat_area.config(state=tk.DISABLED)
     chat_area.yview(tk.END)  # Scroll to the bottom
     status_label.config(text="Ready")
@@ -123,7 +124,8 @@ def extract_text_from_pdf(file_path):
 
 # Set up the GUI
 root = TkinterDnD.Tk()  # Use TkinterDnD.Tk instead of tk.Tk
-root.title("Chat with Jules")
+root.title("Chat with The Brain")
+
 
 # Define font styles
 font_style = ('Helvetica', 16)  # Font family and size
