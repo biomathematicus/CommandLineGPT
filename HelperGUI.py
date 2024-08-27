@@ -1,5 +1,3 @@
-#Must install first  pip install tkinterdnd2 PyMuPDF
- 
 import os
 import openai
 import tkinter as tk
@@ -32,8 +30,8 @@ my_assistant = client.beta.assistants.create(
 my_thread = client.beta.threads.create()
 
 def send_message():
-    user_input = entry.get()
-    if not user_input.strip():
+    user_input = entry.get("1.0", tk.END).strip()
+    if not user_input:
         return
 
     # Add user message to the thread
@@ -42,7 +40,7 @@ def send_message():
         role="user",
         content=user_input,
     )
-    entry.delete(0, tk.END)  # Clear the entry box
+    entry.delete("1.0", tk.END)  # Clear the entry box
 
     # Disable the send button and start processing
     send_button.config(state=tk.DISABLED)
@@ -101,8 +99,8 @@ def handle_dropped_file(file_path):
     # Extract text from the dropped PDF file
     text = extract_text_from_pdf(file_path)
     if text:
-        entry.delete(0, tk.END)  # Clear the entry box
-        entry.insert(0, text)  # Insert extracted text
+        entry.delete("1.0", tk.END)  # Clear the entry box
+        entry.insert(tk.END, text)  # Insert extracted text
         send_message()  # Automatically send the extracted text
     else:
         update_gui("Error reading the PDF file.")
@@ -126,7 +124,6 @@ def extract_text_from_pdf(file_path):
 root = TkinterDnD.Tk()  # Use TkinterDnD.Tk instead of tk.Tk
 root.title("Chat with The Brain")
 
-
 # Define font styles
 font_style = ('Helvetica', 16)  # Font family and size
 
@@ -137,8 +134,9 @@ root.geometry("900x900")  # Example size, adjust as needed
 chat_area = scrolledtext.ScrolledText(root, wrap=tk.WORD, state=tk.DISABLED, height=30, width=80, font=font_style)
 chat_area.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-entry = tk.Entry(root, width=80, font=font_style)
-entry.pack(padx=10, pady=(0, 10), fill=tk.X)
+# Replace tk.Entry with tk.Text for word wrapping, make the height smaller
+entry = tk.Text(root, wrap=tk.WORD, height=3, font=font_style)  # Smaller height
+entry.pack(padx=10, pady=(0, 10), fill=tk.BOTH, expand=True)
 
 send_button = tk.Button(root, text="Send", command=send_message, font=font_style)
 send_button.pack(padx=10, pady=(0, 10))
