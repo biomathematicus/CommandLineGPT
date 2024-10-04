@@ -2,12 +2,13 @@ import os
 import openai
 import anthropic
 import json
-import tkinter as tk
-from tkinter import scrolledtext
-import platform
+from PyQt5.QtWidgets import QApplication, QWidget, QTextEdit, QPushButton, QVBoxLayout, QHBoxLayout, QLineEdit
+from PyQt5.QtCore import Qt
 
-class MultiLLMChatbot:
+class MultiLLMChatbot(QWidget):
     def __init__(self):
+        super().__init__()
+
         # Load configuration
         config_file = "config.json"
         with open(config_file, 'r') as file:
@@ -20,7 +21,7 @@ class MultiLLMChatbot:
         self.nameLeft = config['nameLeft']
         self.nameRight = config['nameRight']
 
-        # Initialize OpenAI API (this part remains unchanged)
+        # Initialize OpenAI API
         openai.api_key = os.getenv("OPENAI_API_KEY")
         if not openai.api_key:
             print("OpenAI API key is not set. Please set the OPENAI_API_KEY environment variable.")
@@ -35,7 +36,7 @@ class MultiLLMChatbot:
             name=self.nameLeft,
             tools=[{"type": "file_search"}]
         )
-        
+
         self.thread_openai = self.openai_client.beta.threads.create()
 
         # Initialize Anthropic API
@@ -54,96 +55,68 @@ class MultiLLMChatbot:
         self.init_gui()
 
     def init_gui(self):
-        self.root = tk.Tk()
-        self.root.title("Multi-LLM Chatbot")
+        self.setWindowTitle("Multi-LLM Chatbot")
+        self.setGeometry(100, 100, 800, 600)
 
-        # Explicit color settings
-        bg_color = "white"
-        text_color = "black"
-        button_bg_color = "lightgray"
+        layout = QVBoxLayout()
 
-        # OS-specific fixes for macOS (Darwin)
-        if platform.system() == "Darwin":
-            bg_color = "white"
-            text_color = "black"
-            button_bg_color = "lightgray"
+        # Text areas for OpenAI and Anthropic responses
+        self.text_area_left = QTextEdit()
+        self.text_area_left.setPlaceholderText("OpenAI Response")
+        self.text_area_left.setReadOnly(True)
+        layout.addWidget(self.text_area_left)
 
-        # Set root window background color
-        self.root.configure(bg=bg_color)
+        self.text_area_right = QTextEdit()
+        self.text_area_right.setPlaceholderText("Anthropic Response")
+        self.text_area_right.setReadOnly(True)
+        layout.addWidget(self.text_area_right)
 
-        # Frame to hold the textboxes with forced background color
-        text_frame = tk.Frame(self.root, bg=bg_color)
-        text_frame.pack(expand=True, fill=tk.BOTH)
+        # User input field
+        self.user_input = QLineEdit()
+        self.user_input.setPlaceholderText("Type your input here and press Enter")
+        layout.addWidget(self.user_input)
 
-        # Left textbox for OpenAI responses with explicit color settings
-        self.text_area_left = scrolledtext.ScrolledText(
-            text_frame, wrap=tk.WORD, width=50, bg=bg_color, fg=text_color,
-            insertbackground=text_color,  # Ensures cursor visibility
-            highlightbackground=bg_color,  # Border color
-            highlightcolor=bg_color  # Border color when focused
-        )
-        self.text_area_left.pack(side=tk.LEFT, expand=True, fill=tk.BOTH, padx=10, pady=10)
+        # Copy buttons
+        buttons_layout = QHBoxLayout()
+        self.copy_button_left = QPushButton("Copy OpenAI Response")
+        self.copy_button_left.clicked.connect(self.copy_openai_response)
+        buttons_layout.addWidget(self.copy_button_left)
 
-        # Button to copy OpenAI response with explicit color settings
-        self.copy_button_left = tk.Button(
-            self.root, text="Copy OpenAI Response", command=self.copy_openai_response,
-            bg=button_bg_color, fg=text_color
-        )
-        self.copy_button_left.pack(side=tk.LEFT, padx=10, pady=5)
+        self.copy_button_right = QPushButton("Copy Anthropic Response")
+        self.copy_button_right.clicked.connect(self.copy_anthropic_response)
+        buttons_layout.addWidget(self.copy_button_right)
 
-        # Right textbox for Anthropic responses with explicit color settings
-        self.text_area_right = scrolledtext.ScrolledText(
-            text_frame, wrap=tk.WORD, width=50, bg=bg_color, fg=text_color,
-            insertbackground=text_color,  # Ensures cursor visibility
-            highlightbackground=bg_color,  # Border color
-            highlightcolor=bg_color  # Border color when focused
-        )
-        self.text_area_right.pack(side=tk.RIGHT, expand=True, fill=tk.BOTH, padx=10, pady=10)
+        layout.addLayout(buttons_layout)
 
-        # Button to copy Anthropic response with explicit color settings
-        self.copy_button_right = tk.Button(
-            self.root, text="Copy Anthropic Response", command=self.copy_anthropic_response,
-            bg=button_bg_color, fg=text_color
-        )
-        self.copy_button_right.pack(side=tk.RIGHT, padx=10, pady=5)
+        self.setLayout(layout)
 
-        # User input field (spans both text areas) with explicit color settings
-        self.user_input = tk.Entry(
-            self.root, width=100, bg=bg_color, fg=text_color, insertbackground=text_color,  # Cursor color
-            highlightbackground=bg_color,  # Border color
-            highlightcolor=bg_color  # Border color when focused
-        )
-        self.user_input.pack(fill=tk.X, padx=10, pady=10)
-        self.user_input.bind("<Return>", self.on_enter_pressed)
-
-        self.root.mainloop()
+        # Connect Enter key to input processing
+        self.user_input.returnPressed.connect(self.on_enter_pressed)
 
     def copy_openai_response(self):
         if self.last_response_left:
-            self.root.clipboard_clear()
-            self.root.clipboard_append(self.last_response_left)
-            self.root.update()  # Keeps the clipboard updated
+            clipboard = QApplication.clipboard()
+            clipboard.setText(self.last_response_left)
 
     def copy_anthropic_response(self):
         if self.last_response_right:
-            self.root.clipboard_clear()
-            self.root.clipboard_append(self.last_response_right)
-            self.root.update()  # Keeps the clipboard updated
+            clipboard = QApplication.clipboard()
+            clipboard.setText(self.last_response_right)
 
-    def on_enter_pressed(self, event):
-        user_input = self.user_input.get().strip()
+    def on_enter_pressed(self):
+        user_input = self.user_input.text().strip()
         if user_input:
             if user_input.upper() == "FOO":
-                self.criticize_each_other()  # Trigger critique with previous responses
+                self.criticize_each_other()
             else:
                 self.process_user_input(user_input)
-        self.user_input.delete(0, tk.END)
+        self.user_input.clear()
 
     def process_user_input(self, user_input):
-        self.text_area_left.insert(tk.END, ">>>>>>>>>>>>>>>>>>>>>>>>>>\n")
-        self.text_area_left.insert(tk.END, f"User: {user_input}\n")
-        self.text_area_right.insert(tk.END, ">>>>>>>>>>>>>>>>>>>>>>>>>>\n")
-        self.text_area_right.insert(tk.END, f"User: {user_input}\n")
+        self.text_area_left.append(">>>>>>>>>>>>>>>>>>>>>>>>>>")
+        self.text_area_left.append(f"User: {user_input}")
+        self.text_area_right.append(">>>>>>>>>>>>>>>>>>>>>>>>>>")
+        self.text_area_right.append(f"User: {user_input}")
 
         # Send user input to both LLMs
         response_left = self.send_to_openai(user_input)
@@ -154,13 +127,11 @@ class MultiLLMChatbot:
         self.last_response_right = response_right
 
         # Display the responses in the respective text areas
-        self.text_area_left.insert(tk.END, f"Message sent to OpenAI: {user_input}\n")
-        self.text_area_left.insert(tk.END, f"{self.nameLeft}: {response_left}\n")
-        self.text_area_left.insert(tk.END, "--------------------\n")
+        self.text_area_left.append(f"{self.nameLeft}: {response_left}")
+        self.text_area_left.append("--------------------")
 
-        self.text_area_right.insert(tk.END, f"Message sent to Anthropic: {user_input}\n")
-        self.text_area_right.insert(tk.END, f"{self.nameRight}: {response_right}\n")
-        self.text_area_right.insert(tk.END, "--------------------\n")
+        self.text_area_right.append(f"{self.nameRight}: {response_right}")
+        self.text_area_right.append("--------------------")
 
     def send_to_openai(self, user_input):
         try:
@@ -175,7 +146,6 @@ class MultiLLMChatbot:
                 thread_id=self.thread_openai.id,
                 assistant_id=self.assistant_openai.id
             )
-            # Retrieve responses
             while run_openai.status in ["queued", "in_progress"]:
                 run_openai = self.openai_client.beta.threads.runs.retrieve(
                     thread_id=self.thread_openai.id,
@@ -208,30 +178,25 @@ class MultiLLMChatbot:
             return f"Anthropic error: {e}"
 
     def criticize_each_other(self):
-        # Ensure we have previous responses to critique
         if self.last_response_left is None or self.last_response_right is None:
-            self.text_area_left.insert(tk.END, "No previous responses to critique.\n")
-            self.text_area_right.insert(tk.END, "No previous responses to critique.\n")
+            self.text_area_left.append("No previous responses to critique.")
+            self.text_area_right.append("No previous responses to critique.")
             return
 
-        # Step 1: Critique each other's response
         critique_left = self.send_to_openai(f"Other LLM responded to the same question as follows. Validate accuracy and find flaws: {self.last_response_right}")
         critique_right = self.send_to_anthropic(f"Other LLM responded to the same question as follows. Validate accuracy and find flaws: {self.last_response_left}")
 
-        self.text_area_left.insert(tk.END, f"{self.nameLeft} Critique: {critique_left}\n")
-        self.text_area_right.insert(tk.END, f"{self.nameRight} Critique: {critique_right}\n")
-        self.text_area_left.insert(tk.END, "--------------------\n")
-        self.text_area_right.insert(tk.END, "--------------------\n")
+        self.text_area_left.append(f"{self.nameLeft} Critique: {critique_left}")
+        self.text_area_right.append(f"{self.nameRight} Critique: {critique_right}")
 
-        # Step 2: Send back critique for improvement
         improved_left = self.send_to_openai(f"Other LLM criticized your output as follows. Validate accuracy and improve your answer: {critique_right}")
         improved_right = self.send_to_anthropic(f"Other LLM criticized your output as follows. Validate accuracy and improve your answer: {critique_left}")
 
-        self.text_area_left.insert(tk.END, f"{self.nameLeft} Improved: {improved_left}\n")
-        self.text_area_right.insert(tk.END, f"{self.nameRight} Improved: {improved_right}\n")
-        self.text_area_left.insert(tk.END, "--------------------\n")
-        self.text_area_right.insert(tk.END, "--------------------\n")
-
+        self.text_area_left.append(f"{self.nameLeft} Improved: {improved_left}")
+        self.text_area_right.append(f"{self.nameRight} Improved: {improved_right}")
 
 if __name__ == "__main__":
-    MultiLLMChatbot()
+    app = QApplication([])
+    chatbot = MultiLLMChatbot()
+    chatbot.show()
+    app.exec_()
