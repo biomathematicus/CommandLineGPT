@@ -8,3 +8,5 @@
 .venv/*
 # Ignore the ocnfiguration file. It is dowloaded but not updated
 config.json
+# Exclude workspace
+CommandLineGPT.code-workspace
