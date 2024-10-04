@@ -2,11 +2,8 @@ import os
 import openai
 import anthropic
 import json
-#import tkinter as tk
-#from tkinter import scrolledtext, Button
 import tkinter as tk
 from tkinter import scrolledtext
-from tkinter import ttk
 import platform
 
 class MultiLLMChatbot:
@@ -60,66 +57,61 @@ class MultiLLMChatbot:
         self.root = tk.Tk()
         self.root.title("Multi-LLM Chatbot")
 
-        # Use a TTK style to force colors across platforms
-        style = ttk.Style()
+        # Explicit color settings
+        bg_color = "white"
+        text_color = "black"
+        button_bg_color = "lightgray"
 
-        # OS-Specific settings
-        if platform.system() == "Darwin":  # macOS detection
-            style.theme_use('clam')  # Use clam theme for macOS for consistency
-            style.configure("TFrame", background="white")
-            style.configure("TButton", background="lightgray", foreground="black")
-            style.configure("TEntry", fieldbackground="white", foreground="black", insertbackground="black")
-            style.configure("TText", background="white", foreground="black")
-        elif platform.system() == "Windows":
-            style.theme_use('vista')  # Use Windows-appropriate theme
-            style.configure("TFrame", background="white")
-            style.configure("TButton", background="lightgray", foreground="black")
-            style.configure("TEntry", fieldbackground="white", foreground="black", insertbackground="black")
-            style.configure("TText", background="white", foreground="black")
-        else:  # For Linux or other OS
-            style.theme_use('default')
-            style.configure("TFrame", background="white")
-            style.configure("TButton", background="lightgray", foreground="black")
-            style.configure("TEntry", fieldbackground="white", foreground="black", insertbackground="black")
-            style.configure("TText", background="white", foreground="black")
+        # OS-specific fixes for macOS (Darwin)
+        if platform.system() == "Darwin":
+            bg_color = "white"
+            text_color = "black"
+            button_bg_color = "lightgray"
 
-        # Frame to hold the textboxes with a forced background color
-        text_frame = ttk.Frame(self.root)
+        # Set root window background color
+        self.root.configure(bg=bg_color)
+
+        # Frame to hold the textboxes with forced background color
+        text_frame = tk.Frame(self.root, bg=bg_color)
         text_frame.pack(expand=True, fill=tk.BOTH)
 
         # Left textbox for OpenAI responses with explicit color settings
         self.text_area_left = scrolledtext.ScrolledText(
-            text_frame, wrap=tk.WORD, width=50, bg="white", fg="black",
-            insertbackground="black",  # Ensures the cursor is visible
-            highlightbackground="white",  # Border color
-            highlightcolor="white"  # Border color when focused
+            text_frame, wrap=tk.WORD, width=50, bg=bg_color, fg=text_color,
+            insertbackground=text_color,  # Ensures cursor visibility
+            highlightbackground=bg_color,  # Border color
+            highlightcolor=bg_color  # Border color when focused
         )
         self.text_area_left.pack(side=tk.LEFT, expand=True, fill=tk.BOTH, padx=10, pady=10)
 
-        # Button to copy OpenAI response with platform-specific background color
-        self.copy_button_left = ttk.Button(
-            self.root, text="Copy OpenAI Response", command=self.copy_openai_response
+        # Button to copy OpenAI response with explicit color settings
+        self.copy_button_left = tk.Button(
+            self.root, text="Copy OpenAI Response", command=self.copy_openai_response,
+            bg=button_bg_color, fg=text_color
         )
         self.copy_button_left.pack(side=tk.LEFT, padx=10, pady=5)
 
         # Right textbox for Anthropic responses with explicit color settings
         self.text_area_right = scrolledtext.ScrolledText(
-            text_frame, wrap=tk.WORD, width=50, bg="white", fg="black",
-            insertbackground="black",  # Ensures the cursor is visible
-            highlightbackground="white",  # Border color
-            highlightcolor="white"  # Border color when focused
+            text_frame, wrap=tk.WORD, width=50, bg=bg_color, fg=text_color,
+            insertbackground=text_color,  # Ensures cursor visibility
+            highlightbackground=bg_color,  # Border color
+            highlightcolor=bg_color  # Border color when focused
         )
         self.text_area_right.pack(side=tk.RIGHT, expand=True, fill=tk.BOTH, padx=10, pady=10)
 
-        # Button to copy Anthropic response with platform-specific background color
-        self.copy_button_right = ttk.Button(
-            self.root, text="Copy Anthropic Response", command=self.copy_anthropic_response
+        # Button to copy Anthropic response with explicit color settings
+        self.copy_button_right = tk.Button(
+            self.root, text="Copy Anthropic Response", command=self.copy_anthropic_response,
+            bg=button_bg_color, fg=text_color
         )
         self.copy_button_right.pack(side=tk.RIGHT, padx=10, pady=5)
 
         # User input field (spans both text areas) with explicit color settings
-        self.user_input = ttk.Entry(
-            self.root, width=100
+        self.user_input = tk.Entry(
+            self.root, width=100, bg=bg_color, fg=text_color, insertbackground=text_color,  # Cursor color
+            highlightbackground=bg_color,  # Border color
+            highlightcolor=bg_color  # Border color when focused
         )
         self.user_input.pack(fill=tk.X, padx=10, pady=10)
         self.user_input.bind("<Return>", self.on_enter_pressed)
