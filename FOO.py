@@ -59,7 +59,11 @@ class MultiLLMChatbot:
         # Frame to hold the textboxes
         text_frame = tk.Frame(self.root)
         text_frame.pack(expand=True, fill=tk.BOTH)
-
+        
+        # Frame to hold the textboxes
+        text_frame = tk.Frame(self.root, bg="white")  # Set frame background
+        text_frame.pack(expand=True, fill=tk.BOTH)    
+    
         # Left textbox for OpenAI responses
         self.text_area_left = scrolledtext.ScrolledText(text_frame, wrap=tk.WORD, width=50)
         self.text_area_left.pack(side=tk.LEFT, expand=True, fill=tk.BOTH, padx=10, pady=10)
@@ -163,7 +167,7 @@ class MultiLLMChatbot:
             response = self.anthropic_client.messages.create(
                 model=self.modelRight,
                 max_tokens=1000,
-                temperature=0.7,
+                temperature=0.1,
                 messages=[
                     {"role": "user", "content": user_input}
                 ]
