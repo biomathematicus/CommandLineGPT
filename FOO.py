@@ -1,3 +1,4 @@
+import platform
 import os
 import openai
 import anthropic
@@ -56,33 +57,40 @@ class MultiLLMChatbot:
         self.root = tk.Tk()
         self.root.title("Multi-LLM Chatbot")
 
+        # Check if the system is macOS and adjust appearance accordingly
+        if platform.system() == "Darwin":  # macOS detection
+            try:
+                # Force light mode on macOS, overriding dark mode if enabled
+                self.root.tk.call("::tk::unsupported::MacWindowStyle", "style", self.root._w, "light", "document")
+            except tk.TclError:
+                pass  # Ignore if the Tcl version doesn't support this
+
         # Frame to hold the textboxes
-        text_frame = tk.Frame(self.root, bg="white")  # Set frame background
+        text_frame = tk.Frame(self.root, bg="white")
         text_frame.pack(expand=True, fill=tk.BOTH)
 
         # Left textbox for OpenAI responses
-        self.text_area_left = scrolledtext.ScrolledText(text_frame, wrap=tk.WORD, width=50, bg="white", fg="black")  # Set text area background and text color
+        self.text_area_left = scrolledtext.ScrolledText(text_frame, wrap=tk.WORD, width=50, bg="white", fg="black")
         self.text_area_left.pack(side=tk.LEFT, expand=True, fill=tk.BOTH, padx=10, pady=10)
 
         # Button to copy OpenAI response
-        self.copy_button_left = Button(self.root, text="Copy OpenAI Response", command=self.copy_openai_response, bg="lightgray")  # Set button background
+        self.copy_button_left = Button(self.root, text="Copy OpenAI Response", command=self.copy_openai_response, bg="lightgray")
         self.copy_button_left.pack(side=tk.LEFT, padx=10, pady=5)
 
         # Right textbox for Anthropic responses
-        self.text_area_right = scrolledtext.ScrolledText(text_frame, wrap=tk.WORD, width=50, bg="white", fg="black")  # Set text area background and text color
+        self.text_area_right = scrolledtext.ScrolledText(text_frame, wrap=tk.WORD, width=50, bg="white", fg="black")
         self.text_area_right.pack(side=tk.RIGHT, expand=True, fill=tk.BOTH, padx=10, pady=10)
 
         # Button to copy Anthropic response
-        self.copy_button_right = Button(self.root, text="Copy Anthropic Response", command=self.copy_anthropic_response, bg="lightgray")  # Set button background
+        self.copy_button_right = Button(self.root, text="Copy Anthropic Response", command=self.copy_anthropic_response, bg="lightgray")
         self.copy_button_right.pack(side=tk.RIGHT, padx=10, pady=5)
 
         # User input field (spans both text areas)
-        self.user_input = tk.Entry(self.root, width=100, bg="white", fg="black")  # Set entry background and text color
+        self.user_input = tk.Entry(self.root, width=100, bg="white", fg="black")
         self.user_input.pack(fill=tk.X, padx=10, pady=10)
         self.user_input.bind("<Return>", self.on_enter_pressed)
 
         self.root.mainloop()
-
 
     def copy_openai_response(self):
         if self.last_response_left:
