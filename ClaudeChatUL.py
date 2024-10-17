@@ -14,49 +14,62 @@ def extract_text_from_pdf(file_path):
             text += page.extract_text() + "\n"
     return text
 
+def upload_file(file_path):
+    """Simulate file upload for Anthropic (you can modify based on actual API needs)."""
+    if not os.path.exists(file_path):
+        print(f"File not found: {file_path}")
+        return None
+    try:
+        print(f"File uploaded successfully: {file_path}")
+        return file_path  # Simulate successful file upload
+    except Exception as e:
+        print(f"Failed to upload file: {e}")
+        return None
+
 # Start the chat loop
 messages = []
 
+print("*****************   N E W   C H A T   *****************")
+
 while True:
-    # Get user input
-    user_input = input("You: ")
-    
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>")
+    user_input = input("Juan: ")
+
     # Check if the user wants to exit
     if user_input.lower() in ['exit', 'quit', 'bye']:
         print("Claude: Goodbye!")
         break
     
-    # Check if the user wants to upload a PDF
-    if user_input.lower().startswith('upload pdf:'):
-        file_path = user_input.split(':', 1)[1].strip()
-        try:
-            if not file_path.lower().endswith('.pdf'):
-                raise ValueError("The file must be a PDF.")
-            
-            file_name = os.path.basename(file_path)
-            pdf_text = extract_text_from_pdf(file_path)
-            
-            user_message = f"I've uploaded a PDF file named '{file_name}'. Here's the content:\n\n{pdf_text}\n\nPlease analyze this PDF content."
+    # Handle file upload with the "file:" prefix
+    if user_input.startswith("file:"):
+        file_path = user_input[5:].strip()
+        file_id = upload_file(file_path)
+        if file_id:
+            file_content = extract_text_from_pdf(file_id)
+            user_message = f"I've uploaded a PDF file. Here's the content:\n\n{file_content}\n\nPlease analyze this PDF content."
             messages.append({"role": "user", "content": user_message})
-            print(f"PDF '{file_name}' uploaded and processed successfully.")
-        except Exception as e:
-            print(f"Error processing PDF: {e}")
+            print(f"File '{file_path}' uploaded and processed successfully.")
+            print(">>>>>>>>>>>>>>>>>>>>>>>>>>")
             continue
-    else:
-        # Add user message to the conversation
-        messages.append({"role": "user", "content": user_input})
-    
+
+    # Add user message to the conversation
+    messages.append({"role": "user", "content": user_input})
+
     # Send the message to Claude and get the response
-    response = client.messages.create(
-        model="claude-3-opus-20240229",
-        max_tokens=1000,
-        temperature=0.99,
-        messages=messages
-    )
-    
-    # Print Claude's response
-    assistant_message = response.content[0].text
-    print("Claude:", assistant_message)
+    try:
+        response = client.messages.create(
+            model="claude-3-opus-20240229",
+            max_tokens=1000,
+            temperature=0.99,
+            messages=messages
+        )
+        assistant_message = response.content[0].text
+    except Exception as e:
+        assistant_message = f"Error: {e}"
+
+    # Print Claude's response with <<<<<< markers
+    print("\n<<<<<<<<<<<<<<<<<<<<<<<<<<")
+    print(f"Claude: {assistant_message}")
     
     # Add Claude's response to the conversation
     messages.append({"role": "assistant", "content": assistant_message})
