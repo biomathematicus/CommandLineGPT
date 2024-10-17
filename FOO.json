@@ -1,0 +1,55 @@
+{
+    "CONFIG": {
+      "instructions": "This project intends to generate a book.",
+      "description": "Cervantes"
+    },
+    "MODELS": [
+      {
+        "model_code": "gpt-4o",
+        "model_name": "OpenAI GPT 4o"
+      },
+      {
+        "model_code": "claude-3-opus-20240229",
+        "model_name": "Anthropic Claude-3-opus-20240229"
+      }
+    ],
+    "TASKS": [
+        {"request": "Did Cervantes give birth to the novel?", "instructions": "", "output_length": 2000, "file_name": "q2.tex", "iterations": 10},
+        {"request": "What is the Instituto Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q3.tex", "iterations": 5},
+        {"request": "What is the meaning of the surname Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q4.tex", "iterations": 5},
+        {"request": "Where is the birthplace of the surname Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q5.tex", "iterations": 5},
+        {"request": "What places around the world are named for Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q6.tex", "iterations": 5},
+        {"request": "What places in Spain named Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q7.tex", "iterations": 5},
+        {"request": "What places around the world with statues of Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q8.tex", "iterations": 5},
+        {"request": "What buildings are named after Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q9.tex", "iterations": 5},
+        {"request": "How many Cervantes Households in the United States?", "instructions": "", "output_length": 2000, "file_name": "q10.tex", "iterations": 5},
+        {"request": "Where are Cervantes Households located in the United States?", "instructions": "", "output_length": 2000, "file_name": "q11.tex", "iterations": 5},
+        {"request": "When did Cervantes as a surname arrive in the western hemisphere?", "instructions": "", "output_length": 2000, "file_name": "q12.tex", "iterations": 5},
+        {"request": "Where is the first record of the surname Cervantes in México?", "instructions": "", "output_length": 2000, "file_name": "q13.tex", "iterations": 5},
+        {"request": "Where is the first record of the surname Cervantes in the United States?", "instructions": "", "output_length": 2000, "file_name": "q14.tex", "iterations": 5},
+        {"request": "Where is the first record of the surname Cervantes in each of the United States?", "instructions": "", "output_length": 2000, "file_name": "q15.tex", "iterations": 5},
+        {"request": "Where does Cervantes rank in frequency among Spanish surnames in the United States?", "instructions": "", "output_length": 2000, "file_name": "q16.tex", "iterations": 5},
+        {"request": "Where does Cervantes rank in frequency among Spanish surnames in Spain?", "instructions": "", "output_length": 2000, "file_name": "q17.tex", "iterations": 5},
+        {"request": "What other spellings of Cervantes? Cervantez? Servantez?", "instructions": "", "output_length": 2000, "file_name": "q18.tex", "iterations": 5},
+        {"request": "Were there any individuals surnamed Cervantes in the territories that became the United States?", "instructions": "", "output_length": 2000, "file_name": "q19.tex", "iterations": 5},
+        {"request": "Did any individual names Cervantes sail with any of the Spanish explorers?", "instructions": "", "output_length": 2000, "file_name": "q20.tex", "iterations": 5},
+        {"request": "Who was Melchor Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q21.tex", "iterations": 5},
+        {"request": "Who was Victoriano Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q22.tex", "iterations": 5},
+        {"request": "Did any Cervantes fight in the Texas Revolution against México?", "instructions": "", "output_length": 2000, "file_name": "q23.tex", "iterations": 5},
+        {"request": "Did any Cervantes fight in the U.S.-México War?", "instructions": "", "output_length": 2000, "file_name": "q24.tex", "iterations": 5},
+        {"request": "Are there any streets in the United States named Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q25.tex", "iterations": 5},
+        {"request": "Are there any geographic points of interest named Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q26.tex", "iterations": 5},
+        {"request": "Who is the most renowned academic expert in the United States on Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q27.tex", "iterations": 5},
+        {"request": "Who is the most renowned academic expert in Spain on Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q28.tex", "iterations": 5},
+        {"request": "Is there a Cervantes scholarship program anywhere in Spain or the United States?", "instructions": "", "output_length": 2000, "file_name": "q29.tex", "iterations": 5},
+        {"request": "How many copies of Don Quixote have been sold world-wide?", "instructions": "", "output_length": 2000, "file_name": "q30.tex", "iterations": 5},
+        {"request": "Are there any direct descendants of Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q31.tex", "iterations": 5},
+        {"request": "Where do any direct descendants of Cervantes live?", "instructions": "", "output_length": 2000, "file_name": "q32.tex", "iterations": 5},
+        {"request": "What is the most famous quote of Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q33.tex", "iterations": 5},
+        {"request": "Why should individuals of Hispanic origin read Don Quixote?", "instructions": "", "output_length": 2000, "file_name": "q34.tex", "iterations": 5},
+        {"request": "Did Don Quixote influence how we talk or converse with each other?", "instructions": "", "output_length": 2000, "file_name": "q35.tex", "iterations": 5},
+        {"request": "How did Cervantes influence other Spanish writers?", "instructions": "", "output_length": 2000, "file_name": "q36.tex", "iterations": 5},
+        {"request": "How did Cervantes influence authors with Spanish surnames?", "instructions": "", "output_length": 2000, "file_name": "q37.tex", "iterations": 5},
+    ]    
+}
+  
