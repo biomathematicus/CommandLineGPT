@@ -1,9 +1,9 @@
 import os
 import openai
 import json
-from PyQt5.QtWidgets import QApplication, QWidget, QTextEdit, QLineEdit, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QTextEdit, QLineEdit, QVBoxLayout, QPushButton
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QUrl
-from PyQt5.QtGui import QDragEnterEvent, QDropEvent
+from PyQt5.QtGui import QDragEnterEvent, QDropEvent, QClipboard
 
 class LLMWorker(QThread):
     result_ready = pyqtSignal(str)  # Signal to emit when the result is ready
@@ -57,6 +57,7 @@ class OpenAIChatbot(QWidget):
         self.instructions = config['instructions']
         self.model = config['model']
         self.name = config['name']
+        self.latest_response = ""  # Store the latest AI response
 
         openai.api_key = os.getenv("OPENAI_API_KEY")
         if not openai.api_key:
@@ -97,6 +98,11 @@ class OpenAIChatbot(QWidget):
         self.user_input = QLineEdit(self)
         self.user_input.setPlaceholderText("Type your message and press Enter")
         layout.addWidget(self.user_input)
+
+        # Button for copying the latest AI response
+        self.copy_button = QPushButton("Copy Latest Answer")
+        self.copy_button.clicked.connect(self.copy_latest_answer)
+        layout.addWidget(self.copy_button)
 
         # Connect Enter key to input processing
         self.user_input.returnPressed.connect(self.on_enter_pressed)
@@ -159,11 +165,17 @@ class OpenAIChatbot(QWidget):
         self.worker_thread.start()
 
     def display_results(self, response):
+        self.latest_response = response  # Store the latest AI response
         self.text_area.append(f"{self.name}: {response}")
         self.text_area.append("<<<<<<<<<<<<<<<<<<<<<<<<<<")
 
         # Re-enable the input field after processing is done
         self.user_input.setEnabled(True)
+
+    def copy_latest_answer(self):
+        clipboard = QApplication.clipboard()
+        clipboard.setText(self.latest_response)
+        self.text_area.append("Latest answer copied to clipboard.")
 
 if __name__ == "__main__":
     app = QApplication([])
