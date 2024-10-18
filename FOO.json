@@ -1,20 +1,28 @@
 {
     "CONFIG": {
-      "instructions": "This project intends to generate a book.",
+      "instructions": "This project intends to generate a book. Generate output in LaTeX as a section. Do nto add anything else to the response. Only LaTeX code.",
       "description": "Cervantes"
     },
     "MODELS": [
       {
         "model_code": "gpt-4o",
-        "model_name": "OpenAI GPT 4o"
+        "model_name": "OpenAI GPT 4o",
+        "temperature": 0.1
       },
       {
-        "model_code": "claude-3-opus-20240229",
-        "model_name": "Anthropic Claude-3-opus-20240229"
+        "model_code": "gpt-4o",
+        "model_name": "OpenAI GPT 4o",
+        "temperature": 0.9
       }
     ],
     "TASKS": [
-        {"request": "Did Cervantes give birth to the novel?", "instructions": "", "output_length": 2000, "file_name": "q2.tex", "iterations": 10},
+        {
+          "request": "Did Cervantes give birth to the novel?", 
+          "instructions": "Produce output in LaTeX as a chapter.", 
+          "output_length": 2000, 
+          "file_name": "q2.tex", 
+          "iterations": 10
+        },
         {"request": "What is the Instituto Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q3.tex", "iterations": 5},
         {"request": "What is the meaning of the surname Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q4.tex", "iterations": 5},
         {"request": "Where is the birthplace of the surname Cervantes?", "instructions": "", "output_length": 2000, "file_name": "q5.tex", "iterations": 5},
@@ -49,7 +57,14 @@
         {"request": "Why should individuals of Hispanic origin read Don Quixote?", "instructions": "", "output_length": 2000, "file_name": "q34.tex", "iterations": 5},
         {"request": "Did Don Quixote influence how we talk or converse with each other?", "instructions": "", "output_length": 2000, "file_name": "q35.tex", "iterations": 5},
         {"request": "How did Cervantes influence other Spanish writers?", "instructions": "", "output_length": 2000, "file_name": "q36.tex", "iterations": 5},
-        {"request": "How did Cervantes influence authors with Spanish surnames?", "instructions": "", "output_length": 2000, "file_name": "q37.tex", "iterations": 5},
+        {"request": "How did Cervantes influence authors with Spanish surnames?", "instructions": "", "output_length": 2000, "file_name": "q37.tex", "iterations": 5}
+    ],
+    "DUMMY": [ 
+      {
+        "model_code": "claude-3-opus-20240229",
+        "model_name": "Anthropic Claude-3-opus-20240229",
+        "temperature": 0.1
+      }
     ]    
 }
   
