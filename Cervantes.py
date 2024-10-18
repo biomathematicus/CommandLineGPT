@@ -112,7 +112,7 @@ def main():
         for agent in agents:
             response = agent.get_response(request + "\n\n" + instructions)
             initial_responses.append(response)
-            with open(task["file_name"], 'a') as f:
+            with open('log_' + task["file_name"], 'a') as f:
                 f.write(f"Initial response from agent:\n{response}\n\n")
 
         # Step 2: Each agent critiques other agents' responses
@@ -122,7 +122,7 @@ def main():
             critique_prompt = "Another LLM responded to the same question as follows. Find the flaws:\n\n" + other_responses
             critique_response = agent.get_response(critique_prompt)
             critiqued_responses.append(critique_response)
-            with open(task["file_name"], 'a') as f:
+            with open('log_' + task["file_name"], 'a') as f:
                 f.write(f"Critique by agent {i}:\n{critique_response}\n\n")
 
         # Step 3: Each agent refines its response based on the criticism
@@ -130,7 +130,7 @@ def main():
             other_critiques = "\n\n".join([f"Criticism from another agent:\n{resp}" for j, resp in enumerate(critiqued_responses) if j != i])
             refine_prompt = "Other agents criticized your response as follows. Validate criticism and refine as needed:\n\n" + other_critiques
             refined_response = agent.get_response(refine_prompt)
-            with open(task["file_name"], 'a') as f:
+            with open('log_' + task["file_name"], 'a') as f:
                 f.write(f"Refined response by agent {i}:\n{refined_response}\n\n")
 
 if __name__ == "__main__":
