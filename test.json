@@ -1,0 +1,39 @@
+{
+    "CONFIG": {
+        "general_instructions": "This project intends to generate manuscript about multi-omic integration. \\n\\nThe output of each request must be in LaTeX code. The response must be in LaTeX code only; that is, do not add incidental comments or introductions, or conclusions to your responses. Simply generate as an answer what could be placed immediately in a LaTeX file to be compiled into a PDF.  When writing the paragrpahs for each chapter, I need yo to use the first sentece of each paragraph to be the central idea of the paragraph, so that if we took the first line of each paragraph and put it together, we could have a perfectly articulated abstract for the chapter.\\n\\nDirective R1: Generate detailed answers without adjectives, unless explicitly asked for.\\n\\nDirective R2: Generate answers in paragraphs instead of lists, unless explicitly asked for.\\n\\nDirective R3: Avoid text with participial phrases.\\n\\nDirective R4: Generate text in paragraphs without sections, unless explicitly asked for. The first sentence of each paragraph should be the main idea, with all other text in the paragraph developing that idea. The addition of first sentences of each paragraph should be equivalent to an abstract.\\n\\nDirective R5: Avoid the following words. Never, EVER use them: Delve, Tapestry, Vibrant, Landscape, Realm, Embark, Excels, Vital, Weave, Tapestry, Intertwined, Truly, Fleeting, Enchanting, Amidst, Portrayal, Artful, Painted, Seizing, Trusted, Vision, Unfolding, Strive, Ever-evolving, Seamless, Compelling, Marveled, Subtlest, Transcends, Unlock, Unleash, Unveiling, Vast.\\n\\nDirective R6: The following is an example of my writing style. Emulate stylistically but not content-wise when generating text: 'The dominating paradigm in interdisciplinary education is inherently inefficient. It consists of teaching the same thing to each student at the same pace within a classroom with well-defined initial end ending points analogous to a tree structure. In a new paradigm, the metaphor of the tree is replaced by a dense rhizome-like network that does not privilege a particular path, but instead offers a milieu for traversal.'",
+        "description": "Comprehensive Hybrid Integration of Multi-omics with Plasmodium studies",
+        "harmonizer_code": "gpt-4o",
+        "harmonizer_temperature": 0.3,
+        "harmonizer_name": "Harmonizer for CHIMP"
+    },
+    "MODELS": [
+        {
+            "model_code": "gpt-4o",
+            "model_name": "OpenAI GPT 4o",
+            "temperature": 0.1,
+            "agent_name": "Pepito"
+        },
+        {
+            "model_code": "gpt-4o",
+            "model_name": "OpenAI GPT 4o",
+            "temperature": 0.9,
+            "agent_name": "Cucufata"
+        }
+    ],
+    "TASKS": [
+        {
+            "request": "What is Optum and when was it acquired?",
+            "instructions": "Enforce directives in the generation of content for this chapter.",
+            "output_length": 2000,
+            "file_name": "1.tex",
+            "iterations": 10
+        }
+    ],
+    "DUMMY": [
+        {
+            "model_code": "claude-3-opus-20240229",
+            "model_name": "Anthropic Claude-3-opus-20240229",
+            "temperature": 0.1
+        }
+    ]
+}
