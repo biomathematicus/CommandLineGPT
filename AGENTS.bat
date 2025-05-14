@@ -1,0 +1,1 @@
+ActivateEnv AgentAI "C:\Dropbox\!JBGResearch\CommandLineGPT"
