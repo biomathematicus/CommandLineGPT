@@ -47,9 +47,9 @@ git reset --hard HEAD
 Clone the repository and run any of the scripts directly.
 
 ```bash
-git clone [your-repo-url]
+git clone https://github.com/biomathematicus/CommandLineGPT.git
 cd [your-repo]
-python [script].py
+python Helper.py
 ```
 
 ### File Descriptions
