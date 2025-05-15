@@ -84,4 +84,4 @@ This project is open-sourced under CC-BY-SA.
 
 ### Contact
 
-For queries or suggestions, contact biomathematicus (Google it) or raise an issue in the repository.
+For queries or suggestions, contact biomathematicus (google it) or raise an issue in the repository.
