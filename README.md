@@ -38,8 +38,8 @@ git reset --hard HEAD
 ### Prerequisites
 
 * Python 3.x
-* An OpenAI API key loaded via `OPENAI_API_KEY`
-* An Anthropic API key loaded via `ANTHROPIC_API_KEY`
+* An OpenAI API key loaded via environment variable `OPENAI_API_KEY`
+* An Anthropic API key loaded via environment variable `ANTHROPIC_API_KEY`
 * (Optional) NLTK tokenizers: `python -c "import nltk; nltk.download('punkt')"`
 
 ### Installation
