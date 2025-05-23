@@ -3,7 +3,7 @@
 
 ### Overview
 
-This repository offers a compact collection of Python tools to help developers interact with AI agents such as OpenAI's GPT and Anthropic's Claude. The interfaces include command-line shells, GUI widgets, and file-driven workflows. All scripts are configured to operate using standard environmental variable credentials, and they support API-based, conversational, and document-processing tasks.
+This repository offers a compact collection of Python tools to help developers interact with AI agents such as OpenAI's GPT, Anthropic's Claude and multiple models via Groq. The interfaces include command-line shells, GUI widgets, and file-driven workflows. All scripts are configured to operate using standard environmental variable credentials, and they support API-based, conversational, and document-processing tasks.
 
 ### Git Protocol
 
